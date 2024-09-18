@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <style>
+    .container {
+      display: grid;
+      gap: 10px;
+      grid-auto-rows: minmax(100px, auto);
+      & > input {
+        margin: auto;
+        border: 1px solid black;
+        width: 6.3ch;
+        height: 6.3ch;
+      }
+    }
+    body, #content {
+      width: min-content;
+      gap: 20px;
+    }
+    #content {
+      display: flex;
+      flex-direction: row;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <div class="container" style="grid-template-columns: repeat(3, 1fr);">
+        <input type="number" class="box"></input>
+        <input type="number" class="box"></input>
+        <input type="number" class="box"></input>
+        <input type="number" class="box"></input>
+        <input type="number" class="box"></input>
+        <input type="number" class="box"></input>
+        <input type="number" class="box"></input>
+        <input type="number" class="box"></input>
+        <input type="number" class="box"></input>
+      </div>
+      <hr>
+      <div class="container" style="grid-template-columns: repeat(1, 1fr);">
+        <input type="text" class="termo"></input>
+        <input type="text" class="termo"></input>
+        <input type="text" class="termo"></input>
+      </div>
+      <button onclick="calcular()">calcular</button>
+      <button>resetar</button>
+      <p>resultado: <span id="resultado">[]</span></p>
+      <script src="main.js"></script>
+    </div>
+  </body>
+</html>
