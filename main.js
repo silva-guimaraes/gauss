@@ -55,7 +55,7 @@ function lu(a, b) {
     let la = a[i][i]; // pivot
 
     // em seguida iterar coluna abaixo e encontra os multiplicadores de cada
-    // linha para que zerem cada coeficientes.
+    // linha para que zerem cada coeficiente.
 
     for (let j = i+1; j < 3; j++) {
       let m = mult(la, a[j][i]);
@@ -90,7 +90,7 @@ function lu(a, b) {
   // possamos subistiuir na mesma posição acima como coeficiente encontrado.
   for (let i = n-1; i >= 0; i--) {
 
-    // somar das variáveis descobertas.
+    // soma das variáveis descobertas.
     let sum = 0;
     for (let j = n-1; j > i; j--) {
       sum += a[i][j] * x[j];
