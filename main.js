@@ -89,7 +89,7 @@ function lu(a, b) {
   // Li1 * y1 + Li2 * y2 + ... + Lii-1 * yii-1 + Lii * yi
   // (note que como estavamos trabalhando com linhas de Li, agora estamos trabalhando com elementos 
   // individuais dessas linhas.)
-  // aqui podemos para em 'Lii-1' pois não sabemos 'yi' e todas as outras incógnitas que vem depois tem fator 0.
+  // aqui podemos parar em 'Lii-1' pois não sabemos 'yi' e todas as outras incógnitas que vem depois tem fator 0.
   // vamos representar essa soma como: soma + Lii * yi:
   // soma + Lii * yi = bi:
   // isolando 'yi', temos:
