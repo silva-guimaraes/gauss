@@ -81,6 +81,21 @@ function lu(a, b) {
   console.log(l);
 
   // L * y = b
+  //
+  // já temos 'L' e 'b' e queremos isolar y de cada linha. podemos reescrever esse equação como:
+  // Li * yi = bi
+  // onde 'i' referencia linhas da matriz.
+  // Li pode ser reescrito como:
+  // Li1 * y1 + Li2 * y2 + ... + Lii-1 * yii-1 + Lii * yi
+  // (note que como estavamos trabalhando com linhas de Li, agora estamos trabalhando com elementos 
+  // individuais dessas linhas.)
+  // aqui podemos para em 'Lii-1' pois não sabemos 'yi' e todas as outras incógnitas que vem depois tem fator 0.
+  // vamos representar essa soma como: soma + Lii * yi:
+  // soma + Lii * yi = bi:
+  // isolando 'yi', temos:
+  // yi = (bi - soma) / Lii
+  // e é essencialmente isso que temos para calcular 'L * y = b' e 'U * x = y'
+
   let y = new Array(n).fill(0);
 
   for (let i = 0; i < n; i++) {
