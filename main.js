@@ -85,7 +85,7 @@ function lu(a, b) {
   // já temos 'L' e 'b' e queremos isolar y de cada linha. podemos reescrever esse equação como:
   // Li * yi = bi
   // onde 'i' referencia linhas da matriz.
-  // Li pode ser reescrito como:
+  // Li * yi pode ser reescrito como:
   // Li1 * y1 + Li2 * y2 + ... + Lii-1 * yii-1 + Lii * yi
   // (note que como estavamos trabalhando com linhas de Li, agora estamos trabalhando com elementos 
   // individuais dessas linhas.)
