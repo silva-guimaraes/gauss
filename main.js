@@ -8,13 +8,17 @@
 //   19, 
 //   8]
 
+
+// por um erro bobo nomeamos o repositórios de gauss porém o algoritmo
+// a seguir implementa o método da decomposição LU.
+
 /**
  * @param {Number} la
  * @param {Number} lb
  * @returns Number
  */
 function mult(la, lb) {
-  return -lb / la;
+  return lb / la;
 }
 
 /**
@@ -29,7 +33,7 @@ function mult(la, lb) {
 /**
   * @param {Array<Array<Number>>} a
   * @param {Array<Number>} b
-  * @returns {[Matrix, Matrix, Vector] | null}
+  * @returns {Matrix | null}
   */
 function lu(a, b) {
 
@@ -41,12 +45,12 @@ function lu(a, b) {
   let n = a[0].length;
 
   /**
-   * @type {Array<Array<Number>>} u
+   * @type {Array<Array<Number>>} l
    */
-  let u = Array.from(Array(a.length), () => new Array(a[0].length).fill(0));
+  let l = Array.from(Array(a.length), () => new Array(a[0].length).fill(0));
 
   for (let i = 0; i < n; i++) {
-    u[i][i] = 1;
+    l[i][i] = 1;
   }
 
   // itera por cada pivot definido por a[i][i]
@@ -62,46 +66,48 @@ function lu(a, b) {
 
       // multiplica cada elemento da linha do pivot pelo multiplicador e subtrai
       // pela linha do coeficiente
-      a[j][0] += m * a[i][0];
-      a[j][1] += m * a[i][1];
-      a[j][2] += m * a[i][2];
-
-      // fazer o mesmo para os termos. isso trata a & b como matriz aumentada.
-      b[j] += m * b[i];
+      a[j][0] -= m * a[i][0];
+      a[j][1] -= m * a[i][1];
+      a[j][2] -= m * a[i][2];
 
       // salvar multiplicador na matriz u 
-      u[j][i] = m;
+      l[j][i] = m;
     }
   }
 
-  // forma triangular obtida. hora de descobrir as incognitas.
+  l = l;
+  let u = a;
 
-  // array onde cada posição do elemento corresponde a uma incognita.
+  console.log(l);
+
+  // L * y = b
+  let y = new Array(n).fill(0);
+
+  for (let i = 0; i < n; i++) {
+    let sum = 0;
+    for (let j = 0; j < i; j++) {
+      sum += l[i][j] * y[j];
+    }
+    y[i] = (b[i] - sum) / l[i][i];
+  }
+
+  console.log(y);
+
+  // U * x = y
   let x = new Array(n).fill(0);
 
-  // para encontrar a incognita isolada de cada linha precisamos somar o calculo 
-  // de todos as incognitas que já sabemos ao termo independente e dividir 
-  // este resultado pelo fator da incognita que estamos procurando.
-  // em uma matriz triangular o elemento mais a esquerda sempre será o fator da 
-  // incognita que desejamos. todos os outros elementos da linha de 'a' 
-  // são variáveis que já sabemos o valor.
-
-  // começamos por baixo e seguimos para cima para que a cada resultado salvo
-  // possamos subistiuir na mesma posição acima como coeficiente encontrado.
   for (let i = n-1; i >= 0; i--) {
-
-    // soma das variáveis descobertas.
     let sum = 0;
     for (let j = n-1; j > i; j--) {
-      sum += a[i][j] * x[j];
+      sum += u[i][j] * x[j];
     }
-    // encontra a incognita
-    x[i] = (b[i] /* termo */ - sum /* soma */) / a[i][i] /* fator */;
+    x[i] = (y[i] - sum) / u[i][i];
   }
 
-  let l = a;
+  console.log(x);
 
-  return [l, u, x];
+
+  return x;
 }
 
 let a = [ [60,30,10], [50,30,20], [70,15,15]];
@@ -141,8 +147,6 @@ function calcular() {
   a = Array.from(Array(a.length), () => new Array(a[0].length).fill(0));
   b = new Array(termos.length).fill(0);
 
-  console.log(a);
-
   for (let k = 0; k < boxes.length; k++) {
     let i = Math.floor(k / 3);
     let j = k % a[0].length;
@@ -157,7 +161,7 @@ function calcular() {
   if (ret == null) {
     throw 'impossivel';
   }
-  let [l, u, x] = ret;
+  let x = ret;
 
   let resultado = document.querySelector('#resultado');
   if (resultado == null) {
